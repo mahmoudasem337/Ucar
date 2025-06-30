@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AsemApplication<asem>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.graduationproject.asem.AsemApplication",
+            "projectName": "asem",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
