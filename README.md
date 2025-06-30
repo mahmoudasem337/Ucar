@@ -28,26 +28,26 @@ UCAR is a marketplace that facilitate finding suitable used cars, predict car pr
 
 ## Screenshots 
 
-![image](https://github.com/user-attachments/assets/4f584129-a2a5-4443-831e-208ebe1e95c8)
-![image](https://github.com/user-attachments/assets/4d564c17-58a7-4b3f-a81f-e5738b75a4dc)
-![image](https://github.com/user-attachments/assets/90f9d849-07e0-4c93-87fc-0816c653e636)
-![image](https://github.com/user-attachments/assets/b7a07a29-fb79-4897-b9b1-8c187d3416da)
-![image](https://github.com/user-attachments/assets/fcb8aadf-a5c8-4133-af55-727d577455d2)
-![image](https://github.com/user-attachments/assets/0986762e-cc2a-4233-8ee4-0be6adea6ee1)
-![image](https://github.com/user-attachments/assets/f192fffd-a8f3-4888-90d1-94fb086e82d6)
-![image](https://github.com/user-attachments/assets/53d7b376-1e89-47a8-b7dd-459971ce439f)
-![image](https://github.com/user-attachments/assets/84fb5162-5058-47e1-bc3e-280ac95a2513)
+![image](https://github.com/user-attachments/assets/8040fc37-bde7-435a-a4f4-5ed13651a560)
+![image](https://github.com/user-attachments/assets/5af881a0-6b2f-4586-a714-a94c235fbeca)
+![image](https://github.com/user-attachments/assets/7d8cc039-47ef-410d-a72d-4ac9c25acc8c)
+![image](https://github.com/user-attachments/assets/ad877c62-93f1-4f90-858b-d540d1db7fd2)
+![image](https://github.com/user-attachments/assets/72e6836b-96ed-4e76-ab7a-b3ec6b94b121)
+![image](https://github.com/user-attachments/assets/3f95188e-606d-49c3-a6ba-8899ce205d54)
+![image](https://github.com/user-attachments/assets/b7c4f4a5-73b4-4f98-8289-00d93d5e2fcf)
+![image](https://github.com/user-attachments/assets/23080866-cfdb-442f-90d9-1641c7211137)
+
 
 ---
 
 ## Architecture
-![image](https://github.com/user-attachments/assets/e6cd0783-b664-4bac-b2a8-14c2a8a0c341)
+![image](https://github.com/user-attachments/assets/d376c8c4-711c-4294-863b-12fa401cb0b9)
 
 ---
 
 
 ## Database Design
-![image](https://github.com/user-attachments/assets/1a86b5b1-3889-4d6e-8b75-f17b22232fc2)
+![image](https://github.com/user-attachments/assets/3534ecdd-7a23-4f93-90df-fcbe0aacba58)
 
 ---
 
