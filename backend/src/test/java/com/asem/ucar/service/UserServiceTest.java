@@ -14,11 +14,12 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("User Service unit tests")
@@ -93,4 +94,56 @@ public class UserServiceTest {
         }
 
     }
+
+    @Nested
+    class GetAllUsersTests {
+
+        @Test
+        void shouldReturnAllUsersWhenUsersExist() {
+            List<User> users = List.of(
+                    new User(1L, "ahmed", "pass", Role.ROLE_USER, "01114143565", "a@gmail.com"),
+                    new User(2L, "ali", "pass", Role.ROLE_USER, "01224211405", "b@gmail.com")
+            );
+            when(userRepository.findAll()).thenReturn(users);
+            List<User> result = userService.getAllUsers();
+            assertEquals(2, result.size());
+            assertEquals(users, result);
+            verify(userRepository).findAll();
+        }
+
+        @Test
+        void shouldReturnEmptyListWhenNoUsersExist() {
+            when(userRepository.findAll()).thenReturn(List.of());
+            List<User> result = userService.getAllUsers();
+            assertNotNull(result);
+            assertTrue(result.isEmpty());
+            verify(userRepository).findAll();
+        }
+    }
+
+    @Nested
+    class DeleteUserAccountTests {
+
+        @Test
+        void shouldDeleteUserWhenIdExists() {
+            when(userRepository.existsById(user.getId())).thenReturn(true);
+            userService.deleteUserAccount(user.getId());
+            verify(userRepository).existsById(user.getId());
+            verify(userRepository).deleteById(user.getId());
+        }
+
+        @Test
+        void shouldThrowUserNotFoundExceptionWhenIdDoesNotExist() {
+            when(userRepository.existsById(user.getId())).thenReturn(false);
+            UserNotFoundException ex = assertThrows(
+                    UserNotFoundException.class,
+                    () -> userService.deleteUserAccount(user.getId())
+            );
+            assertTrue(ex.getMessage().contains(user.getId().toString()));
+            verify(userRepository).existsById(user.getId());
+            verify(userRepository, never()).deleteById(any());
+        }
+    }
+
+
 }
