@@ -16,19 +16,13 @@ public class UserService {
     }
 
     public User getByEmail(String email) {
-        if (email == null || email.isBlank()) {
-            throw new IllegalArgumentException("Email must not be blank");
-        }
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> UserNotFoundException.byEmail(email));
+                .orElseThrow(UserNotFoundException::new);
     }
 
     public User getById(Long id) {
-        if (id <= 0) {
-            throw new IllegalArgumentException("Id must be positive");
-        }
         return userRepository.findById(id)
-                .orElseThrow(() -> UserNotFoundException.byId(id));
+                .orElseThrow(UserNotFoundException::new);
     }
 
     public List<User> getAllUsers() {
@@ -36,10 +30,9 @@ public class UserService {
     }
 
     public void deleteUserAccount(Long id) {
-        if (!userRepository.existsById(id)) {
-            throw UserNotFoundException.byId(id);
-        }
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(UserNotFoundException::new);
+        userRepository.delete(user);
     }
 
 }
