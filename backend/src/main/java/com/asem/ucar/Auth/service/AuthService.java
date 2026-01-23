@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -26,13 +27,15 @@ public class AuthService {
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
     private final UserMapper userMapper;
+    private final UserRepository userRepository;
 
-    public AuthService(UserRepository repository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, AuthenticationManager authenticationManager, UserMapper userMapper) {
+    public AuthService(UserRepository repository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, AuthenticationManager authenticationManager, UserMapper userMapper, UserRepository userRepository) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtils = jwtUtils;
         this.authenticationManager = authenticationManager;
         this.userMapper = userMapper;
+        this.userRepository = userRepository;
     }
 
     public AuthResponse register(RegisterRequest request) {
@@ -61,12 +64,19 @@ public class AuthService {
         return new AuthResponse(jwtToken);
     }
 
-    public Optional<String> getCurrentUserEmail() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.isAuthenticated()) {
-            return Optional.of(auth.getName());
+    public Optional<UserDetails> getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            return Optional.of((UserDetails) authentication.getPrincipal());
         }
         return Optional.empty();
+    }
+
+    public User getCurrentUserEntity() {
+          return getCurrentUser()
+                .map(UserDetails::getUsername)
+                .flatMap(userRepository::findByEmail)
+                .orElseThrow(() -> new RuntimeException("User not authenticated"));
     }
 
 }
