@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 @Service
 public class CloudinaryService {
@@ -15,37 +16,30 @@ public class CloudinaryService {
         this.cloudinary = cloudinary;
     }
 
-    public String uploadFile(String file) {
-        try{
-            HashMap<Object, Object> options = new HashMap<>();
-            options.put("folder", "AdvertisementImages");
-            Map uploadedFile = cloudinary.uploader().upload(file.getBytes(), options);
-            String publicId = (String) uploadedFile.get("public_id");
-            return cloudinary.url().secure(true).generate(publicId);
-        } catch (IOException e){
-            e.printStackTrace();
-            return null;
-        }
-    }
+    public Map<String, Object> getDirectUploadSignature() {
 
-    public Map<String, Object> getDirectUploadSignature(String folder) {
         long timestamp = System.currentTimeMillis() / 1000L;
 
-        Map<String, Object> paramsToSign = new HashMap<>();
+        Map<String, Object> paramsToSign = new TreeMap<>();
         paramsToSign.put("timestamp", timestamp);
-        if (folder != null && !folder.isEmpty()) {
-            paramsToSign.put("folder", folder);
-        }
+        paramsToSign.put("folder", "AdvertisementImages");
+        paramsToSign.put("allowed_formats", "jpg,png,webp");
 
-        String signature = cloudinary.apiSignRequest(paramsToSign, cloudinary.config.apiSecret, 1);
+        String signature = cloudinary.apiSignRequest(
+                paramsToSign,
+                cloudinary.config.apiSecret,
+                2 // signature version
+        );
 
         Map<String, Object> response = new HashMap<>();
         response.put("api_key", cloudinary.config.apiKey);
         response.put("timestamp", timestamp);
         response.put("signature", signature);
-        if (folder != null && !folder.isEmpty()) {
-            response.put("folder", folder);
-        }
+        response.put("folder", "AdvertisementImages");
+
+        response.put("maxFileSize", 7_000_000); // 7MB
+        response.put("allowedFormats", "jpg,png,webp");
+
         return response;
     }
 }
