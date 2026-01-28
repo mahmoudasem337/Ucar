@@ -16,7 +16,7 @@ public class CloudinaryController {
     private final CloudinaryService cloudinaryService;
 
     @GetMapping("/signature")
-    public Map<String, Object> getSignature(@RequestParam(required = false) String folder) {
-        return cloudinaryService.getDirectUploadSignature(folder);
+    public Map<String, Object> getSignature() {
+        return cloudinaryService.getDirectUploadSignature();
     }
 }
