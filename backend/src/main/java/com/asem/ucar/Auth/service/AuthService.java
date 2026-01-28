@@ -69,4 +69,14 @@ public class AuthService {
         return Optional.empty();
     }
 
+<<<<<<< Updated upstream
+=======
+    public User getCurrentUserEntity() {
+          return getCurrentUser()
+                .map(UserDetails::getUsername)
+                .flatMap(userRepository::findByEmail)
+                .orElseThrow(UserNotFoundException::new);
+    }
+
+>>>>>>> Stashed changes
 }
